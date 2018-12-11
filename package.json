@@ -28,7 +28,7 @@
     "dist/vast-client.min.js": "dist/vast-client.min.js"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --reporter spec test/*.js",
+    "test": "mocha --require babel-core/register --reporter spec test/*.js",
     "build": "rollup -c",
     "precommit": "pretty-quick --staged"
   },
@@ -38,7 +38,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.26.0",
     "husky": "^0.14.3",
-    "mocha": "^5.1.1",
+    "mocha": "^5.2.0",
     "path": "^0.12.7",
     "prettier": "^1.11.1",
     "pretty-quick": "^1.4.1",

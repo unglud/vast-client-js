@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<VAST version="2.0">
+<VAST version="4.1" xmlns="http://www.iab.com/VAST">
   <Ad>
     <Wrapper>
       <AdSystem>VAST</AdSystem>
-      <VASTAdTagURI>wrapper-a.xml</VASTAdTagURI>
       <Error>http://example.com/wrapperNoTracking-error</Error>
       <Impression>http://example.com/wrapperNoTracking-impression</Impression>
+      <VASTAdTagURI>wrapper-a.xml</VASTAdTagURI>
     </Wrapper>
   </Ad>
 </VAST>

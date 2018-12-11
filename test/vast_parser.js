@@ -273,6 +273,20 @@ describe('VASTParser', function() {
         ad1.extensions[3].children[0].value.should.eql('{ foo: bar }');
       });
 
+      it('should have 2 AdVerification URLs VAST 4.1', () => {
+        ad1.adVerifications.should.have.length(2);
+      });
+
+      it('validate second adVerification', () => {
+        ad1.adVerifications[1].resource.should.eql('http://example.com/omid2');
+        ad1.adVerifications[1].vendor.should.eql('company2.com-omid');
+        ad1.adVerifications[1].browserOptional.should.eql(false);
+        ad1.adVerifications[1].apiFramework.should.eql('omid');
+        ad1.adVerifications[1].parameters.should.eql(
+          'test-verification-parameter'
+        );
+      });
+
       it('should not have trackingEvents property', () => {
         should.equal(ad1.trackingEvents, undefined);
       });
@@ -373,7 +387,7 @@ describe('VASTParser', function() {
           ]);
         });
 
-        it('should have 8 tracking events', () => {
+        it('should have 9 tracking events', () => {
           linear.trackingEvents.should.have.keys(
             'start',
             'close',
@@ -382,7 +396,8 @@ describe('VASTParser', function() {
             'firstQuartile',
             'thirdQuartile',
             'progress-30',
-            'progress-60%'
+            'progress-60%',
+            'progress-90%'
           );
         });
 

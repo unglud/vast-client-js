@@ -180,4 +180,30 @@ export class ParserUtils {
 
     return splittedVAST;
   }
+
+  /**
+   * Parses the attributes and assign them to object
+   * @param  {Object} node attribute
+   * @param  {Object} object with properties which can be assigned
+   */
+  assignAttributes(attributes, verificationObject) {
+    if (attributes) {
+      for (let attrKey in attributes) {
+        const attribute = attributes[attrKey];
+
+        if (
+          attribute.nodeName &&
+          attribute.nodeValue &&
+          verificationObject.hasOwnProperty(attribute.nodeName)
+        ) {
+          let value = attribute.nodeValue;
+
+          if (typeof verificationObject[attribute.nodeName] === 'boolean') {
+            value = this.parseBoolean(value);
+          }
+          verificationObject[attribute.nodeName] = value;
+        }
+      }
+    }
+  }
 }

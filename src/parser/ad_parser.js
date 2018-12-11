@@ -5,6 +5,7 @@ import { CreativeCompanionParser } from './creative_companion_parser';
 import { CreativeLinearParser } from './creative_linear_parser';
 import { CreativeNonLinearParser } from './creative_non_linear_parser';
 import { ParserUtils } from './parser_utils';
+import { AdVerification } from '../ad_verification';
 
 /**
  * This class provides methods to parse a VAST Ad Element.
@@ -124,6 +125,13 @@ export class AdParser {
           this.parseExtensions(
             ad.extensions,
             this.parserUtils.childrenByName(node, 'Extension')
+          );
+          break;
+
+        case 'AdVerifications':
+          this.parseAdVerifications(
+            ad.adVerifications,
+            this.parserUtils.childrenByName(node, 'Verification')
           );
           break;
 
@@ -292,6 +300,38 @@ export class AdParser {
       }
 
       collection.push(ext);
+    });
+  }
+
+  /**
+   * Parses the AdVerifications Element.
+   * @param  {Array} collection - The array used to store the parsed verifications.
+   * @param  {Array} verifications - The array of verifications to parse.
+   */
+  parseAdVerifications(collection, verifications) {
+    verifications.forEach(verificationNode => {
+      const verification = new AdVerification();
+      const childNodes = verificationNode.childNodes;
+
+      this.parserUtils.assignAttributes(
+        verificationNode.attributes,
+        verification
+      );
+      for (let nodeKey in childNodes) {
+        const node = childNodes[nodeKey];
+
+        switch (node.nodeName) {
+          case 'JavaScriptResource':
+            verification.resource = this.parserUtils.parseNodeText(node);
+            this.parserUtils.assignAttributes(node.attributes, verification);
+            break;
+          case 'VerificationParameters':
+            verification.parameters = this.parserUtils.parseNodeText(node);
+            break;
+        }
+      }
+
+      collection.push(verification);
     });
   }
 
